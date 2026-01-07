@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { tmdbApi, getImageUrl } from '../../services/tmdbApi';
 import type { MovieDetails, Credits, Video, Movie } from '../types/movie.types';
 import { MovieDetailsSkeleton } from '../Skeleton';
@@ -7,8 +7,7 @@ import MovieRow from '../MovieRow';
 
 export default function MovieDetailsPage() {
     const { id } = useParams<{ id: string }>();
-    const location = useLocation();
-    const isMovie = location.pathname.includes('/movie');
+
     const [movie, setMovie] = useState<MovieDetails | null>(null);
     const [cast, setCast] = useState<Credits['cast']>([]);
     const [trailer, setTrailer] = useState<Video | null>(null);
