@@ -43,11 +43,11 @@ export default function HomePage() {
     };
 
     return (
-        <div className="min-h-screen text-white">
+        <div className="min-h-screen text-white pb-20 md:pb-0">
             {/* Hero Section */}
             {/* Hero Section */}
             <div
-                className="relative h-screen w-full bg-cover bg-center"
+                className="relative h-[70vh] md:h-screen w-full bg-cover bg-center"
                 style={{
                     backgroundImage: trending[0] ? `url('${getImageUrl(trending[0].backdrop_path, 'original')}')` : undefined
                 }}
@@ -57,28 +57,28 @@ export default function HomePage() {
                         {trending[0] && (
                             <div className="flex flex-col md:flex-row items-center w-full gap-8 pt-16">
                                 {/* Left Content */}
-                                <div className="flex-1 space-y-6 max-w-2xl">
-                                    <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight drop-shadow-xl">
+                                <div className="flex-1 space-y-4 md:space-y-6 max-w-2xl z-10 text-center md:text-left">
+                                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white leading-tight drop-shadow-xl animate-fade-in-up">
                                         {trending[0].title}
                                     </h1>
 
-                                    <p className="text-gray-300 text-lg md:text-xl line-clamp-3 leading-relaxed drop-shadow-md">
+                                    <p className="text-gray-300 text-sm md:text-lg lg:text-xl line-clamp-3 leading-relaxed drop-shadow-md animate-fade-in-up delay-200">
                                         {trending[0].overview}
                                     </p>
 
-                                    <div className="flex items-center space-x-4 pt-4">
-                                        <button className="px-8 py-3 bg-red-600 text-white rounded-full font-bold transition-all shadow-[0_0_30px_rgba(220,38,38,0.5)] hover:shadow-[0_0_50px_rgba(220,38,38,0.8)] transform hover:scale-105 active:scale-95">
+                                    <div className="flex items-center justify-center md:justify-start space-x-4 pt-4 animate-fade-in-up delay-400">
+                                        <button className="px-6 py-2 md:px-8 md:py-3 bg-red-600 text-white rounded-full font-bold transition-all shadow-[0_0_30px_rgba(220,38,38,0.5)] hover:shadow-[0_0_50px_rgba(220,38,38,0.8)] transform hover:scale-105 active:scale-95 text-sm md:text-base">
                                             Watch now
                                         </button>
-                                        <button className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-black transition-all">
+                                        <button className="px-6 py-2 md:px-8 md:py-3 bg-transparent border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-black transition-all text-sm md:text-base">
                                             Watch trailer
                                         </button>
                                     </div>
                                 </div>
 
                                 {/* Right Poster */}
-                                <div className="hidden md:block w-[350px] flex-shrink-0">
-                                    <div className="rounded-2xl overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500 border-4 border-white/10">
+                                <div className="hidden md:block w-[350px] flex-shrink-0 animate-fade-in-up delay-400">
+                                    <div className="rounded-2xl overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500 border-4 border-white/10 group will-change-transform hover:scale-105">
                                         <img
                                             src={getImageUrl(trending[0].poster_path, 'w500')}
                                             alt={trending[0].title}

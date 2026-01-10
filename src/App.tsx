@@ -14,9 +14,17 @@
 // import ReactRouterExample from "./challenge/ReactRouterExample";
 
 // Movie App - Main Project
+import { useState } from 'react';
 import MovieApp from "./movie/movieapp";
+import WelcomeScreen from "./movie/WelcomeScreen";
 
 function App() {
+    const [showWelcome, setShowWelcome] = useState(true);
+
+    if (showWelcome) {
+        return <WelcomeScreen onComplete={() => setShowWelcome(false)} />;
+    }
+
     return (
         <div>
             {/* Bài học React Router Cơ Bản */}
@@ -29,12 +37,6 @@ function App() {
             <Register /> */}
         </div>
     );
-    //         <LoadingError />
-    //         <UseContextExample />
-    //         <CustomHooks />
-    //         <ReactRouterExample />
-    //     </div>
-    // );
 }
 
 export default App;
