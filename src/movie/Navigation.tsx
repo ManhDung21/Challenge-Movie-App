@@ -29,8 +29,7 @@ export default function Navigation() {
 
     return (
         <nav
-            className={`fixed w-full top-0 z-50 transition-colors duration-300 ${isScrolled ? 'bg-black/90 border-b border-[#2b2b2b]' : 'bg-transparent border-transparent'
-                }`}
+            className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/90 border-b border-[#2b2b2b]' : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent border-transparent'}`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">

@@ -11,12 +11,12 @@ export default function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
         // Start exit animation after 2 seconds
         const timer = setTimeout(() => {
             setIsExiting(true);
-        }, 2000);
+        }, 200);
 
         // Complete callback after animation finishes (total 2.5s)
         const completeTimer = setTimeout(() => {
             onComplete();
-        }, 2500);
+        }, 500);
 
         return () => {
             clearTimeout(timer);
