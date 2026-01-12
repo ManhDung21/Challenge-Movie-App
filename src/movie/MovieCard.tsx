@@ -12,7 +12,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
     const linkPath = 'title' in movie ? `/movie/${movie.id}` : `/tv/${movie.id}`; // Assuming separate details page for TV later, or reuse movie details
 
     return (
-        <div className="group/card relative block aspect-[2/3] rounded-xl overflow-hidden cursor-pointer">
+        <div className="group/card relative block aspect-[2/3] rounded-xl overflow-hidden cursor-pointer animate-scale-in">
             <Link to={linkPath} className="block w-full h-full">
                 <div className="w-full h-full transform transition-transform duration-500 group-hover/card:scale-110">
                     <img
@@ -34,7 +34,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
                 {/* Hover Content */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6 z-20">
-                    <h3 className="text-white font-bold text-xl leading-tight mb-2 line-clamp-2 transition-colors duration-300 group-hover/card:text-red-500 opacity-0 group-hover/card:opacity-100 transform translate-y-4 group-hover/card:translate-y-0 transition-all">
+                    <h3 className="text-white font-bold text-xl leading-tight mb-2 line-clamp-2 transition-all duration-300 group-hover/card:text-red-500 opacity-0 group-hover/card:opacity-100 transform scale-50 group-hover/card:scale-100 origin-bottom-left">
                         {title}
                     </h3>
                 </div>
