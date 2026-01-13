@@ -24,27 +24,27 @@ export default function Navigation() {
 
     const navLinkClass = (path: string) =>
         isActive(path)
-            ? "text-white font-semibold border-b-2 border-red-600 pb-1 text-2xl"
-            : "text-gray-300 hover:text-white font-medium transition-colors hover:text-red-500 text-2xl";
+            ? "text-white font-bold border-b-2 border-red-600 pb-1 text-xl"
+            : "text-gray-300 hover:text-red-600 font-bold transition-colors text-xl";
 
     return (
         <nav
-            className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/90 border-b border-[#2b2b2b]' : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent border-transparent'}`}
+            className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/70 backdrop-blur-md border-b border-[#2b2b2b]' : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent border-transparent'}`}
         >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
+            <div className="hidden md:block w-full px-[30px]">
+                <div className="flex items-center justify-between h-20 md:h-28">
                     {/* Logo - Visible on all screens */}
-                    <Link to="/" className="flex items-center space-x-2">
+                    <Link to="/" className="flex items-center space-x-3">
                         <img
                             src="https://calm-cendol-f3d19f.netlify.app/assets/tmovie-55621206.png"
                             alt="Movie App Logo"
-                            className="h-8 md:h-10 w-auto"
+                            className="h-10 md:h-16 w-auto"
                         />
-                        <span className="text-2xl md:text-4xl font-bold text-white tracking-wide">TheMovies</span>
+                        <span className="text-2xl md:text-3xl font-bold text-white tracking-wide">theMovies</span>
                     </Link>
 
                     {/* Desktop Navigation Links - Hidden on Mobile */}
-                    <div className="hidden md:flex items-center space-x-8">
+                    <div className="hidden md:flex items-center space-x-10">
                         <Link
                             to="/"
                             className={navLinkClass('/')}
@@ -62,14 +62,6 @@ export default function Navigation() {
                             className={navLinkClass('/tv')}
                         >
                             TV Series
-                        </Link>
-                        <Link
-                            to="/search"
-                            className={isActive('/search') ? "text-white transition-colors" : "text-gray-300 hover:text-white transition-colors"}
-                        >
-                            <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
                         </Link>
                     </div>
                 </div>
@@ -94,12 +86,6 @@ export default function Navigation() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                     <span className="text-xs">TV</span>
-                </Link>
-                <Link to="/search" className={`flex flex-col items-center space-y-1 ${isActive('/search') ? 'text-red-600' : 'text-gray-400'}`}>
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    <span className="text-xs">Search</span>
                 </Link>
             </div>
         </nav>

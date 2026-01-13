@@ -85,4 +85,10 @@ export const tmdbApi = {
     getOnTheAirTV: (page: number = 1): Promise<TVResponse> => {
         return fetchFromTMDB<TVResponse>(`/tv/on_the_air?page=${page}`);
     },
+
+    // Search TV
+    searchTV: (query: string, page: number = 1): Promise<TVResponse> => {
+        const encodedQuery = encodeURIComponent(query);
+        return fetchFromTMDB<TVResponse>(`/search/tv?query=${encodedQuery}&page=${page}`);
+    },
 };

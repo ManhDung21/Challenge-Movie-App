@@ -72,80 +72,121 @@ export default function MovieDetailsPage() {
         );
     }
 
-    const year = movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A';
-    const runtime = movie.runtime ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` : 'N/A';
+
 
     return (
-        <div className="min-h-screen bg-[#141414] text-white">
-            {/* Immersive Backdrop */}
+        <div className="relative min-h-screen bg-[#141414] text-white">
+            {/* Full Screen Backdrop */}
             <div
-                className="relative h-[70vh] w-full bg-cover bg-top"
+                className="absolute inset-0 w-full h-full bg-cover bg-center fixed"
                 style={{
-                    backgroundImage: `url('${getImageUrl(movie.backdrop_path, 'original')}')`
+                    backgroundImage: `url('${getImageUrl(movie.backdrop_path, 'original')}')`,
+                    height: '100vh',
+                    position: 'fixed',
+                    zIndex: 0
                 }}
             >
-                <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-[#141414]/60 to-transparent">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-12">
+                {/* Gradient Overlays for readability */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/90 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent"></div>
+            </div>
 
+            {/* Main Content Container */}
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
+                <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
 
-                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-xl">
-                            {movie.title}
-                        </h1>
-
-                        <div className="flex items-center space-x-4 text-gray-300 mb-6 text-sm md:text-base font-medium">
-                            <span className="text-green-400 font-bold">{Math.round(movie.vote_average * 10)}% Match</span>
-                            <span>{year}</span>
-                            <span className="border border-gray-600 px-1 rounded text-xs">HD</span>
-                            <span>{runtime}</span>
+                    {/* Left Column: Poster */}
+                    <div className="hidden md:block w-full md:w-[350px] flex-shrink-0 mx-auto md:mx-0">
+                        <div className="aspect-[2/3] rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)] border border-gray-800/50 group">
+                            <img
+                                src={getImageUrl(movie.poster_path, 'w500')}
+                                alt={movie.title}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
                         </div>
 
-                        <div className="flex flex-wrap gap-3 mb-8">
-                            {movie.genres.map(genre => (
-                                <span
-                                    key={genre.id}
-                                    className="px-3 py-1 bg-white/20 backdrop-blur-md text-white rounded-full text-sm hover:bg-white/30 transition-colors cursor-default"
-                                >
-                                    {genre.name}
-                                </span>
-                            ))}
+                        {/* Action Buttons (Below Poster on Mobile, or here?) - Let's put matches & info here or under title? 
+                           Ref image doesn't show buttons clearly but usually they are near title. 
+                           I'll put buttons under the description in the right column for better flow.
+                        */}
+                    </div>
+
+                    {/* Right Column: Details */}
+                    <div className="flex-1 space-y-6 md:pt-4">
+                        {/* Title */}
+                        <div className="space-y-4">
+                            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-wide drop-shadow-lg leading-tight">
+                                {movie.title}
+                            </h1>
+
+                            {/* Metadata Line (optional, ref image implies it) */}
+                            {/* Genres Pills */}
+                            <div className="flex flex-wrap gap-3">
+                                {movie.genres.map(genre => (
+                                    <span
+                                        key={genre.id}
+                                        className="px-4 py-1.5 rounded-full border border-gray-500 hover:border-white transition-colors text-sm font-medium bg-black/30 backdrop-blur-md cursor-default"
+                                    >
+                                        {genre.name}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
 
-                        {/* Action Buttons */}
-                        <div className="flex space-x-4">
+                        {/* Overview */}
+                        <div className="max-w-3xl">
+                            <p className="text-gray-300 text-base md:text-lg leading-relaxed font-light">
+                                {movie.overview}
+                            </p>
+                        </div>
+
+                        {/* Buttons */}
+                        <div className="flex flex-wrap gap-4 pt-4">
                             {trailer && (
                                 <button
                                     onClick={() => setIsTrailerOpen(true)}
-                                    className="px-8 py-3 bg-white text-black font-bold rounded hover:bg-gray-200 transition-colors flex items-center"
+                                    className="px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-transform active:scale-95 shadow-lg flex items-center gap-2"
                                 >
-                                    <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M8 5v14l11-7z" />
                                     </svg>
-                                    Play Trailer
+                                    Watch Trailer
                                 </button>
                             )}
-                            <button className="px-8 py-3 bg-gray-500/70 text-white font-bold rounded hover:bg-gray-500/50 transition-colors flex items-center backdrop-blur-sm">
-                                <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                More Info
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                    {/* Left Column: Overview */}
-                    <div className="md:col-span-2 space-y-12">
-                        <div>
-                            <h2 className="text-2xl font-bold text-white mb-4">Synopsis</h2>
-                            <p className="text-gray-300 text-lg leading-relaxed">{movie.overview}</p>
                         </div>
 
-                        {/* Inline Trailer - Restored by request */}
+
+                        {/* Casts Section */}
+                        {cast.length > 0 && (
+                            <div className="pt-8">
+                                <h3 className="text-xl font-bold text-white mb-4">Casts</h3>
+                                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-4">
+                                    {cast.slice(0, 6).map(actor => (
+                                        <div key={actor.id} className="space-y-2 group cursor-pointer">
+                                            <div className="aspect-[3/4] rounded-lg overflow-hidden bg-gray-800 shadow-md">
+                                                {actor.profile_path ? (
+                                                    <img
+                                                        src={getImageUrl(actor.profile_path, 'w500')}
+                                                        alt={actor.name}
+                                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                                    />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center text-xs text-gray-500">No Image</div>
+                                                )}
+                                            </div>
+                                            <div className="space-y-0.5">
+                                                <p className="text-sm font-semibold text-white leading-tight truncate">{actor.name}</p>
+                                                <p className="text-xs text-gray-400 leading-tight truncate">{actor.character}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Trailer Section */}
                         {trailer && (
-                            <div className="mt-8">
+                            <div className="pt-8">
                                 <h3 className="text-xl font-bold text-white mb-4">Official Trailer</h3>
                                 <div className="aspect-video w-full bg-black rounded-xl overflow-hidden shadow-lg border border-[#2b2b2b]">
                                     <iframe
@@ -159,62 +200,16 @@ export default function MovieDetailsPage() {
                             </div>
                         )}
                     </div>
-
-                    {/* Right Column: Key Details */}
-                    <div className="space-y-8">
-                        <div>
-                            <h2 className="text-gray-400 mb-2 font-medium">Maturity Rating</h2>
-                            <span className="border border-gray-500 px-2 py-0.5 text-sm text-gray-300">TV-14</span>
-                            <p className="text-xs text-gray-500 mt-1">Recommended for ages 14 and up</p>
-                        </div>
-                    </div>
                 </div>
 
-                {/* Movie Player Embed */}
-
-
-                {/* Cast Scroll Row */}
-                {cast.length > 0 && (
-                    <div className="mt-16">
-                        <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-red-600 pl-4">Top Cast</h2>
-                        <div
-                            className="flex overflow-x-auto space-x-4 pb-4 scrollbar-hide scroll-smooth"
-                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                        >
-                            {cast.map(actor => (
-                                <div key={actor.id} className="min-w-[140px] w-[140px] flex-none group cursor-pointer">
-                                    <div className="aspect-[2/3] rounded-lg overflow-hidden bg-[#2b2b2b] mb-2 relative">
-                                        {actor.profile_path ? (
-                                            <img
-                                                src={getImageUrl(actor.profile_path, 'w500')}
-                                                alt={actor.name}
-                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full flex items-center justify-center text-gray-500">
-                                                No Image
-                                            </div>
-                                        )}
-                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                                    </div>
-                                    <p className="font-semibold text-white text-sm truncate">{actor.name}</p>
-                                    <p className="text-xs text-gray-400 truncate">{actor.character}</p>
-                                </div>
-                            ))}
-                        </div>
+                {/* Similar Movies Section (Below Fold) */}
+                {similarMovies.length > 0 && (
+                    <div className="mt-24 space-y-6">
+                        <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-red-600 pl-4">More Like This</h2>
+                        <MovieRow title="" movies={similarMovies} />
                     </div>
                 )}
-
             </div>
-
-
-
-            {/* Similar Movies */}
-            {similarMovies.length > 0 && (
-                <div className="mt-16 pb-12">
-                    <MovieRow title="More Like This" movies={similarMovies} />
-                </div>
-            )}
 
             {/* Trailer Modal */}
             {isTrailerOpen && trailer && (
