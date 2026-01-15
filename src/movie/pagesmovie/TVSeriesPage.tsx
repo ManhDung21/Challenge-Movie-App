@@ -120,9 +120,9 @@ export default function TVSeriesPage() {
                                 <button
                                     onClick={handleLoadMore}
                                     disabled={isLoadingMore}
-                                    className="px-8 py-2 bg-transparent border border-white text-white rounded-full hover:bg-white hover:text-black transition-all duration-300 font-semibold disabled:opacity-50"
+                                    className="px-8 py-2 bg-transparent border border-white text-white rounded-full hover:bg-white hover:text-red-600 transition-all duration-300 font-semibold disabled:opacity-50"
                                 >
-                                    {isLoadingMore ? 'Loading...' : 'Load More'}
+                                    {isLoadingMore ? 'Loading...' : 'Watch more'}
                                 </button>
                             </div>
                         )}

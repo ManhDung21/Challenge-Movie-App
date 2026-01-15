@@ -64,10 +64,10 @@ export default function HeroCarousel({ movies }: HeroCarouselProps) {
                                             {movie.overview}
                                         </p>
                                         <div className={`flex items-center justify-center md:justify-start space-x-2 md:space-x-4 pt-4 pointer-events-auto ${index === selectedIndex ? 'animate-fade-in-up delay-400' : 'opacity-0'}`}>
-                                            <button className="px-6 py-2 md:px-8 md:py-3 bg-[#ff0000] text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform text-lg md:text-2xl">
+                                            <button className="px-6 py-2 md:px-8 md:py-3 bg-[#ff0000] text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform text-lg md:text-2xl cursor-pointer">
                                                 Watch now
                                             </button>
-                                            <button className="px-6 py-2 md:px-8 md:py-3 bg-transparent border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-red-600 transition-colors text-lg md:text-2xl">
+                                            <button className="px-6 py-2 md:px-8 md:py-3 bg-transparent border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-red-600 transition-colors text-lg md:text-2xl cursor-pointer">
                                                 Watch trailer
                                             </button>
                                         </div>

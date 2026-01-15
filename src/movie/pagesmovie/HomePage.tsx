@@ -65,10 +65,11 @@ export default function HomePage() {
                     </div>
                 ) : (
                     <div className="space-y-8 mt-12">
-                        <MovieRow title="Trending Now" movies={trending} />
-                        <MovieRow title="New Releases" movies={nowPlaying} />
-                        <MovieRow title="Top Rated" movies={topRated} />
-                        <MovieRow title="Coming Soon" movies={upcoming} />
+                        <MovieRow title="Trending Now" movies={trending} viewMoreLink="/movie" />
+                        <MovieRow title="New Releases" movies={nowPlaying} viewMoreLink="/movie" />
+                        <MovieRow title="Top Rated" movies={topRated} viewMoreLink="/movie" />
+                        <MovieRow title="Coming Soon" movies={upcoming} viewMoreLink="/movie" />
+
                     </div>
                 )}
             </div>
