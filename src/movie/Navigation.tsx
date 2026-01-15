@@ -24,70 +24,63 @@ export default function Navigation() {
 
     const navLinkClass = (path: string) =>
         isActive(path)
-            ? "text-white font-bold border-b-2 border-red-600 pb-1 text-xl"
-            : "text-gray-300 hover:text-red-600 font-bold transition-colors text-xl";
+            ? "text-white font-bold text-2xl pb-1 relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-red-600 after:transition-transform after:duration-300 after:origin-center after:scale-x-100"
+            : "text-gray-300 font-bold text-2xl pb-1 relative transition-colors duration-300 hover:text-red-600 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-red-600 after:transition-transform after:duration-300 after:origin-center after:scale-x-0 hover:after:scale-x-100";
 
     return (
-        <nav
-            className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/70 backdrop-blur-md border-b border-[#2b2b2b]' : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent border-transparent'}`}
-        >
-            <div className="hidden md:block w-full px-[30px]">
-                <div className="flex items-center justify-between h-20 md:h-28">
-                    {/* Logo - Visible on all screens */}
-                    <Link to="/" className="flex items-center space-x-3">
-                        <img
-                            src="https://calm-cendol-f3d19f.netlify.app/assets/tmovie-55621206.png"
-                            alt="Movie App Logo"
-                            className="h-10 md:h-16 w-auto"
-                        />
-                        <span className="text-2xl md:text-3xl font-bold text-white tracking-wide">theMovies</span>
-                    </Link>
+        <>
+            <nav
+                className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/70 backdrop-blur-md border-b border-[#2b2b2b]' : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent border-transparent'}`}
+            >
+                <div className="hidden md:block w-full px-[30px]">
+                    <div className="flex items-center justify-between h-20 md:h-25">
+                        {/* Logo - Visible on all screens */}
+                        <Link to="/" className="flex items-center space-x-3">
+                            <img
+                                src="https://calm-cendol-f3d19f.netlify.app/assets/tmovie-55621206.png"
+                                alt="Movie App Logo"
+                                className="h-10 md:h-12 w-auto"
+                            />
+                            <span className="text-2xl md:text-4xl font-bold text-white hover:text-red-600 transition-colors duration-300 cursor-pointer">theMovies</span>
+                        </Link>
 
-                    {/* Desktop Navigation Links - Hidden on Mobile */}
-                    <div className="hidden md:flex items-center space-x-10">
-                        <Link
-                            to="/"
-                            className={navLinkClass('/')}
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            to="/movie"
-                            className={navLinkClass('/movie')}
-                        >
-                            Movies
-                        </Link>
-                        <Link
-                            to="/tv"
-                            className={navLinkClass('/tv')}
-                        >
-                            TV Series
-                        </Link>
+                        {/* Desktop Navigation Links - Hidden on Mobile */}
+                        <div className="hidden md:flex items-center space-x-10">
+                            <Link
+                                to="/"
+                                className={navLinkClass('/')}
+                            >
+                                Home
+                            </Link>
+                            <Link
+                                to="/movie"
+                                className={navLinkClass('/movie')}
+                            >
+                                Movies
+                            </Link>
+                            <Link
+                                to="/tv"
+                                className={navLinkClass('/tv')}
+                            >
+                                TV Series
+                            </Link>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </nav>
 
             {/* Mobile Bottom Navigation Bar */}
-            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/95 border-t border-[#2b2b2b] px-6 py-4 flex justify-between items-center z-50">
-                <Link to="/" className={`flex flex-col items-center space-y-1 ${isActive('/') ? 'text-red-600' : 'text-gray-400'}`}>
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    <span className="text-xs">Home</span>
+            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/95 border-t px-10 py-2 flex justify-between z-[100]">
+                <Link to="/" className={`flex flex-col items-center justify-center ${isActive('/') ? 'text-red-600' : 'text-gray-400'}`}>
+                    <span className="text-[24px] font-bold">Home</span>
                 </Link>
-                <Link to="/movie" className={`flex flex-col items-center space-y-1 ${isActive('/movie') ? 'text-red-600' : 'text-gray-400'}`}>
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
-                    </svg>
-                    <span className="text-xs">Movies</span>
+                <Link to="/movie" className={`flex flex-col items-center justify-center ${isActive('/movie') ? 'text-red-600' : 'text-gray-400'}`}>
+                    <span className="text-[24px] font-bold">Movies</span>
                 </Link>
-                <Link to="/tv" className={`flex flex-col items-center space-y-1 ${isActive('/tv') ? 'text-red-600' : 'text-gray-400'}`}>
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    <span className="text-xs">TV</span>
+                <Link to="/tv" className={`flex flex-col items-center justify-center ${isActive('/tv') ? 'text-red-600' : 'text-gray-400'}`}>
+                    <span className="text-[24px] font-bold">TV</span>
                 </Link>
             </div>
-        </nav>
+        </>
     );
 }

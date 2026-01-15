@@ -32,6 +32,11 @@ export const tmdbApi = {
         return fetchFromTMDB<MoviesResponse>(`/trending/movie/week?page=${page}`);
     },
 
+    // Get popular movies
+    getPopularMovies: (page: number = 1): Promise<MoviesResponse> => {
+        return fetchFromTMDB<MoviesResponse>(`/movie/popular?page=${page}`);
+    },
+
     // Get now playing movies
     getNowPlaying: (page: number = 1): Promise<MoviesResponse> => {
         return fetchFromTMDB<MoviesResponse>(`/movie/now_playing?page=${page}`);

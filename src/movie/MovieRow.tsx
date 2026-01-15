@@ -7,11 +7,9 @@ interface MovieRowProps {
 }
 
 export default function MovieRow({ title, movies }: MovieRowProps) {
-
-
     return (
         <div className="mb-8">
-            <h2 className="text-2xl md:text-4xl font-bold text-white mb-6 px-4 sm:px-6 lg:px-8 border-l-4 border-red-600 ml-4 sm:ml-6 lg:ml-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 px-4 sm:px-6 lg:px-8 border-l-4 border-red-600 ml-4 sm:ml-6 lg:ml-8">
                 {title}
             </h2>
             <div className="relative group overflow-hidden pl-4 md:pl-8">

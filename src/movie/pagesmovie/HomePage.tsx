@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { tmdbApi, getImageUrl } from '../../services/tmdbApi';
+import { tmdbApi } from '../../services/tmdbApi';
 import type { Movie } from '../types/movie.types';
 import MovieRow from '../MovieRow';
 import { MovieGridSkeleton } from '../Skeleton';
+import HeroCarousel from '../HeroCarousel';
 
 export default function HomePage() {
     const [trending, setTrending] = useState<Movie[]>([]);
@@ -44,49 +45,10 @@ export default function HomePage() {
 
     return (
         <div className="min-h-screen text-white pb-20 md:pb-0">
-            <div
-                className="relative h-[70vh] md:h-screen w-full bg-cover bg-center"
-                style={{
-                    backgroundImage: trending[0] ? `url('${getImageUrl(trending[0].backdrop_path, 'original')}')` : undefined
-                }}
-            >
-                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-                        {trending[0] && (
-                            <div className="flex flex-col md:flex-row items-center w-full gap-8 pt-16">
-                                <div className="flex-1 space-y-4 md:space-y-6 max-w-2xl z-10 text-center md:text-left">
-                                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white leading-tight drop-shadow-xl animate-fade-in-up">
-                                        {trending[0].title}
-                                    </h1>
-
-                                    <p className="text-gray-300 text-sm md:text-lg lg:text-xl line-clamp-3 leading-relaxed drop-shadow-md animate-fade-in-up delay-200">
-                                        {trending[0].overview}
-                                    </p>
-
-                                    <div className="flex items-center justify-center md:justify-start space-x-4 pt-4 animate-fade-in-up delay-400">
-                                        <button className="px-8 py-3 bg-[#ff0000] text-white rounded-3xl font-bold transition-all shadow-[0_0_30px_rgba(255,0,0,0.5)] hover:shadow-[0_0_50px_rgba(255,0,0,0.8)] transform hover:-translate-y-1 hover:scale-105 active:scale-95 text-base md:text-lg">
-                                            Watch now
-                                        </button>
-                                        <button className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-3xl font-bold hover:bg-white hover:text-red-500 transition-all text-base md:text-lg">
-                                            Watch trailer
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className="hidden md:block w-[400px] lg:w-[450px] flex-shrink-0 animate-fade-in-up delay-400">
-                                    <div className="rounded-2xl overflow-hidden shadow-2xl group transition-transform duration-500 hover:scale-105">
-                                        <img
-                                            src={getImageUrl(trending[0].poster_path, 'w500')}
-                                            alt={trending[0].title}
-                                            className="w-full h-auto object-cover"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+            {/* Draggable Banner Section */}
+            {!isLoading && trending.length > 0 && (
+                <HeroCarousel movies={trending} />
+            )}
 
             <div className="relative z-10 pb-12">
                 {error && (
