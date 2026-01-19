@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { tmdbApi } from '../../services/tmdbApi';
-import type { Movie } from '../types/movie.types';
-import MovieRow from '../MovieRow';
-import { MovieGridSkeleton } from '../Skeleton';
-import HeroCarousel from '../HeroCarousel';
+import { tmdbApi } from '../../services/Api';
+import type { Movie } from '../Component/movie.types';
+import MovieRow from '../Component/CardandRow/MovieRow';
+import { MovieGridSkeleton } from '../Component/Skeleton';
+import HeroCarousel from '../Component/HeroCarousel';
 
 export default function HomePage() {
     const [trending, setTrending] = useState<Movie[]>([]);

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { tmdbApi } from '../../services/tmdbApi';
-import type { TVShow } from '../types/movie.types';
-import MovieCard from '../MovieCard';
-import { MovieGridSkeleton } from '../Skeleton';
+import { tmdbApi } from '../../services/Api';
+import type { TVShow } from '../Component/movie.types';
+import MovieCard from '../Component/CardandRow/MovieCard';
+import { MovieGridSkeleton } from '../Component/Skeleton';
 
 export default function TVSeriesPage() {
     const [tvShows, setTvShows] = useState<TVShow[]>([]);

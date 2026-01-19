@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { tmdbApi, getImageUrl } from '../../services/tmdbApi';
-import type { MovieDetails, Credits, Video, Movie } from '../types/movie.types';
-import { MovieDetailsSkeleton } from '../Skeleton';
-import MovieRow from '../MovieRow';
+import { tmdbApi, getImageUrl } from '../../services/Api';
+import type { MovieDetails, Credits, Video, Movie } from '../Component/movie.types';
+import { MovieDetailsSkeleton } from '../Component/Skeleton';
+import MovieRow from '../Component/CardandRow/MovieRow';
 
 export default function MovieDetailsPage() {
     const { id } = useParams<{ id: string }>();

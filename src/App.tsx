@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import MovieApp from "./movie/movieapp";
-import WelcomeScreen from "./movie/WelcomeScreen";
+import MovieApp from "./movie/Component/movieapp";
+import WelcomeScreen from "./movie/HomePage/WelcomeScreen";
 
 function App() {
     const [showWelcome, setShowWelcome] = useState(true);

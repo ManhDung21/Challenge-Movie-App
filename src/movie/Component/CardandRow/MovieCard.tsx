@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { getImageUrl } from '../services/tmdbApi';
-import type { Movie, TVShow } from './types/movie.types';
+import { getImageUrl } from '../../../services/Api';
+import type { Movie, TVShow } from '../movie.types';
 
 interface MovieCardProps {
     movie: Movie | TVShow;

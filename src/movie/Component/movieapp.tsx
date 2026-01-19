@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navigation from './Navigation';
-import HomePage from './pagesmovie/HomePage';
-import MovieDetailsPage from './pagesmovie/MovieDetailsPage';
-import MoviesPage from './pagesmovie/MoviesPage';
-import TVSeriesPage from './pagesmovie/TVSeriesPage';
-import Footer from './Footer';
+import Navigation from './FooterVSNavigation/Navigation';
+import HomePage from '../HomePage/HomePage';
+import MovieDetailsPage from '../MovieDetailsPage/MovieDetailsPage';
+import MoviesPage from '../PageMovie/MoviesPage';
+import TVSeriesPage from '../PageTV/TVSeriesPage';
+import Footer from './FooterVSNavigation/Footer';
 
 export default function MovieApp() {
     return (

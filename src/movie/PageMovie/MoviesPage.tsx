@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { tmdbApi } from '../../services/tmdbApi';
-import type { Movie } from '../types/movie.types';
-import MovieCard from '../MovieCard';
-import { MovieGridSkeleton } from '../Skeleton';
+import { tmdbApi } from '../../services/Api';
+import type { Movie } from '../Component/movie.types';
+import MovieCard from '../Component/CardandRow/MovieCard';
+import { MovieGridSkeleton } from '../Component/Skeleton';
 
 export default function MoviesPage() {
     const [movies, setMovies] = useState<Movie[]>([]);

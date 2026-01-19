@@ -1,4 +1,4 @@
-import type { MovieDetails, Credits, VideosResponse, MoviesResponse, TVResponse } from '../movie/types/movie.types';
+import type { MovieDetails, Credits, VideosResponse, MoviesResponse, TVResponse } from '../movie/Component/movie.types';
 
 // TMDB API Key (v3 auth)
 const API_KEY = '7e8bcfdb60f5c663001a7985eeff6d87';

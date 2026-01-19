@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Fade from 'embla-carousel-fade';
-import type { Movie } from './types/movie.types';
-import { getImageUrl } from '../services/tmdbApi';
+import type { Movie } from './movie.types';
+import { getImageUrl } from '../../services/Api';
 
 interface HeroCarouselProps {
     movies: Movie[];
