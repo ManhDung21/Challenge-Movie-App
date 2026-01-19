@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/autoplay';
 
-import type { Movie, TVShow } from '../movie.types';
+import type { Movie, TVShow } from '../../movie.types';
 import MovieCard from './MovieCard';
 
 interface MovieRowProps {

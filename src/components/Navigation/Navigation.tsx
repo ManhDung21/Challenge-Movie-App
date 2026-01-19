@@ -37,7 +37,7 @@ export default function Navigation() {
                         {/* Logo - Visible on all screens */}
                         <Link to="/" className="flex items-center space-x-3">
                             <img
-                                src="https://calm-cendol-f3d19f.netlify.app/assets/tmovie-55621206.png"
+                                src="public/tmovie-55621206.png"
                                 alt="Movie App Logo"
                                 className="h-10 md:h-12 w-auto"
                             />

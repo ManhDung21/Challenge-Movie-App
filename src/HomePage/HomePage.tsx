@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { tmdbApi } from '../../services/Api';
-import type { Movie } from '../Component/movie.types';
-import MovieRow from '../Component/Card/MovieRow';
-import { MovieGridSkeleton } from '../Component/Skeleton';
-import HeroCarousel from '../Component/Card/HeroCarousel';
+import { useEffect, useState } from 'react';
+import { tmdbApi } from '../services/Api';
+import type { Movie } from '../movie.types';
+import MovieRow from '../components/Card/MovieRow';
+import { MovieGridSkeleton } from '../components/Card/Skeleton';
+import HeroCarousel from '../components/Card/HeroCarousel';
 
 export default function HomePage() {
     const [trending, setTrending] = useState<Movie[]>([]);
@@ -13,35 +13,31 @@ export default function HomePage() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Fetch initial data
     useEffect(() => {
+        const loadData = async () => {
+            try {
+                setIsLoading(true);
+                const [trendingData, nowPlayingData, topRatedData, upcomingData] = await Promise.all([
+                    tmdbApi.getTrending(1),
+                    tmdbApi.getNowPlaying(1),
+                    tmdbApi.getTopRated(1),
+                    tmdbApi.getUpcoming(1),
+                ]);
+
+                setTrending(trendingData.results);
+                setNowPlaying(nowPlayingData.results);
+                setTopRated(topRatedData.results);
+                setUpcoming(upcomingData.results);
+            } catch (err) {
+                console.error('Failed to fetch home movies', err);
+                setError('Failed to load movies.');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
         loadData();
     }, []);
-
-    const loadData = async () => {
-        try {
-            setIsLoading(true);
-
-            // Parallel fetch from multiple endpoints
-            const [trendingData, nowPlayingData, topRatedData, upcomingData] = await Promise.all([
-                tmdbApi.getTrending(1),
-                tmdbApi.getNowPlaying(1),
-                tmdbApi.getTopRated(1),
-                tmdbApi.getUpcoming(1),
-            ]);
-
-            setTrending(trendingData.results);
-            setNowPlaying(nowPlayingData.results);
-            setTopRated(topRatedData.results);
-            setUpcoming(upcomingData.results);
-
-        } catch (error) {
-            console.error('Error loading movies:', error);
-            setError('Failed to load movies. Please check your API key or internet connection.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     return (
         <div className="text-white">

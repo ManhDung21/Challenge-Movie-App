@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { tmdbApi } from '../../services/Api';
-import type { Movie } from '../Component/movie.types';
-import MovieCard from '../Component/Card/MovieCard';
-import { MovieGridSkeleton } from '../Component/Skeleton';
+import { useCallback, useEffect, useState } from 'react';
+import { tmdbApi } from '../services/Api';
+import type { TVShow } from '../movie.types';
+import MovieCard from '../components/Card/MovieCard';
+import { MovieGridSkeleton } from '../components/Card/Skeleton';
 
-export default function MoviesPage() {
-    const [movies, setMovies] = useState<Movie[]>([]);
+export default function TVSeriesPage() {
+    const [tvShows, setTvShows] = useState<TVShow[]>([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -14,29 +14,23 @@ export default function MoviesPage() {
     const [keyword, setKeyword] = useState('');
     const [isSearching, setIsSearching] = useState(false);
 
-    // Initial Load
-    useEffect(() => {
-        loadMovies(1);
-    }, []);
-
-    const loadMovies = async (pageNumber: number) => {
+    const loadTvShows = useCallback(async (pageNumber: number, searchTerm: string, searching: boolean) => {
         try {
             if (pageNumber === 1) setIsLoading(true);
             else setIsLoadingMore(true);
 
             // Determine if we should search or fetch popular
-            // Note: For "Load More", we rely on the current state of isSearching and keyword
             let response;
-            if (isSearching && keyword.trim()) {
-                response = await tmdbApi.searchMovies(keyword, pageNumber);
+            if (searching && searchTerm.trim()) {
+                response = await tmdbApi.searchTV(searchTerm, pageNumber);
             } else {
-                response = await tmdbApi.getPopularMovies(pageNumber);
+                response = await tmdbApi.getPopularTV(pageNumber);
             }
 
             if (pageNumber === 1) {
-                setMovies(response.results);
+                setTvShows(response.results);
             } else {
-                setMovies(prev => [...prev, ...response.results]);
+                setTvShows(prev => [...prev, ...response.results]);
             }
             setTotalPages(response.total_pages);
         } catch (error) {
@@ -45,39 +39,30 @@ export default function MoviesPage() {
             setIsLoading(false);
             setIsLoadingMore(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        loadTvShows(1, '', false);
+    }, [loadTvShows]);
 
     const handleLoadMore = () => {
         if (page < totalPages) {
             const nextPage = page + 1;
             setPage(nextPage);
-            loadMovies(nextPage);
+            loadTvShows(nextPage, keyword, isSearching);
         }
     };
 
     const handleSearch = async () => {
-        if (keyword.trim()) {
-            setIsSearching(true);
-            setPage(1);
-            setIsLoading(true);
-            try {
-                // Determine if we are searching or just filtering.
-                // For API search, we usually just replace the list.
-                // Assuming simple search for now (no load more for search in this basic version unless requested)
-                const response = await tmdbApi.searchMovies(keyword, 1);
-                setMovies(response.results);
-                setTotalPages(response.total_pages); // Update total pages for search results if pagination needed later
+        const trimmedKeyword = keyword.trim();
 
-            } catch (error) {
-                console.error("Search failed", error);
-            } finally {
-                setIsLoading(false);
-            }
+        setPage(1);
+        if (trimmedKeyword) {
+            setIsSearching(true);
+            await loadTvShows(1, trimmedKeyword, true);
         } else {
-            // Reset to popular if search cleared
             setIsSearching(false);
-            setPage(1);
-            loadMovies(1);
+            await loadTvShows(1, '', false);
         }
     };
 
@@ -86,7 +71,7 @@ export default function MoviesPage() {
             {/* Page Header */}
             <div className="relative pt-32 pb-12 bg-gradient-to-b from-white/90 to-[#141414]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-start">
-                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center w-full">Movies</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center w-full">TV Series</h1>
                     <div className="relative w-full max-w-xl">
                         <input
                             type="text"
@@ -97,7 +82,7 @@ export default function MoviesPage() {
                                 if (!e.target.value.trim()) {
                                     setIsSearching(false);
                                     setPage(1);
-                                    loadMovies(1);
+                                    loadTvShows(1, '', false);
                                 }
                             }}
                             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -127,9 +112,9 @@ export default function MoviesPage() {
                 ) : (
                     <>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8">
-                            {movies.map((movie, index) => (
-                                <div key={`${movie.id}-${index}`} className="w-full">
-                                    <MovieCard movie={movie} />
+                            {tvShows.map((show, index) => (
+                                <div key={`${show.id}-${index}`} className="w-full">
+                                    <MovieCard movie={show} />
                                 </div>
                             ))}
                         </div>
@@ -146,9 +131,9 @@ export default function MoviesPage() {
                             </div>
                         )}
 
-                        {movies.length === 0 && (
+                        {tvShows.length === 0 && (
                             <div className="text-center text-gray-400 py-20">
-                                No movies found.
+                                No TV shows found.
                             </div>
                         )}
                     </>

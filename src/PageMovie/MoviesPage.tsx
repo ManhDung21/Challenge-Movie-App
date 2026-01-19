@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { tmdbApi } from '../../services/Api';
-import type { TVShow } from '../Component/movie.types';
-import MovieCard from '../Component/Card/MovieCard';
-import { MovieGridSkeleton } from '../Component/Skeleton';
+import { useCallback, useEffect, useState } from 'react';
+import { tmdbApi } from '../services/Api';
+import type { Movie } from '../movie.types';
+import MovieCard from '../components/Card/MovieCard';
+import { MovieGridSkeleton } from '../components/Card/Skeleton';
 
-export default function TVSeriesPage() {
-    const [tvShows, setTvShows] = useState<TVShow[]>([]);
+export default function MoviesPage() {
+    const [movies, setMovies] = useState<Movie[]>([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -14,28 +14,23 @@ export default function TVSeriesPage() {
     const [keyword, setKeyword] = useState('');
     const [isSearching, setIsSearching] = useState(false);
 
-    // Initial Load
-    useEffect(() => {
-        loadTvShows(1);
-    }, []);
-
-    const loadTvShows = async (pageNumber: number) => {
+    const loadMovies = useCallback(async (pageNumber: number, searchTerm: string, searching: boolean) => {
         try {
             if (pageNumber === 1) setIsLoading(true);
             else setIsLoadingMore(true);
 
-            // Determine if we should search or fetch popular
+
             let response;
-            if (isSearching && keyword.trim()) {
-                response = await tmdbApi.searchTV(keyword, pageNumber);
+            if (searching && searchTerm.trim()) {
+                response = await tmdbApi.searchMovies(searchTerm, pageNumber);
             } else {
-                response = await tmdbApi.getPopularTV(pageNumber);
+                response = await tmdbApi.getPopularMovies(pageNumber);
             }
 
             if (pageNumber === 1) {
-                setTvShows(response.results);
+                setMovies(response.results);
             } else {
-                setTvShows(prev => [...prev, ...response.results]);
+                setMovies(prev => [...prev, ...response.results]);
             }
             setTotalPages(response.total_pages);
         } catch (error) {
@@ -44,34 +39,31 @@ export default function TVSeriesPage() {
             setIsLoading(false);
             setIsLoadingMore(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        loadMovies(1, '', false);
+    }, [loadMovies]);
 
     const handleLoadMore = () => {
         if (page < totalPages) {
             const nextPage = page + 1;
             setPage(nextPage);
-            loadTvShows(nextPage);
+            loadMovies(nextPage, keyword, isSearching);
         }
     };
 
     const handleSearch = async () => {
-        if (keyword.trim()) {
+        const trimmedKeyword = keyword.trim();
+
+        setPage(1);
+        if (trimmedKeyword) {
             setIsSearching(true);
-            setPage(1);
-            setIsLoading(true);
-            try {
-                const response = await tmdbApi.searchTV(keyword, 1);
-                setTvShows(response.results);
-                setTotalPages(response.total_pages);
-            } catch (error) {
-                console.error("Search failed", error);
-            } finally {
-                setIsLoading(false);
-            }
+            await loadMovies(1, trimmedKeyword, true);
         } else {
+            // Reset to popular if search cleared
             setIsSearching(false);
-            setPage(1);
-            loadTvShows(1);
+            await loadMovies(1, '', false);
         }
     };
 
@@ -80,7 +72,7 @@ export default function TVSeriesPage() {
             {/* Page Header */}
             <div className="relative pt-32 pb-12 bg-gradient-to-b from-white/90 to-[#141414]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-start">
-                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center w-full">TV Series</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center w-full">Movies</h1>
                     <div className="relative w-full max-w-xl">
                         <input
                             type="text"
@@ -91,7 +83,7 @@ export default function TVSeriesPage() {
                                 if (!e.target.value.trim()) {
                                     setIsSearching(false);
                                     setPage(1);
-                                    loadTvShows(1);
+                                    loadMovies(1, '', false);
                                 }
                             }}
                             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -121,9 +113,9 @@ export default function TVSeriesPage() {
                 ) : (
                     <>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8">
-                            {tvShows.map((show, index) => (
-                                <div key={`${show.id}-${index}`} className="w-full">
-                                    <MovieCard movie={show} />
+                            {movies.map((movie, index) => (
+                                <div key={`${movie.id}-${index}`} className="w-full">
+                                    <MovieCard movie={movie} />
                                 </div>
                             ))}
                         </div>
@@ -133,16 +125,16 @@ export default function TVSeriesPage() {
                                 <button
                                     onClick={handleLoadMore}
                                     disabled={isLoadingMore}
-                                    className="px-8 py-2 bg-transparent border border-white text-white rounded-full hover:bg-white hover:text-red-600 transition-all duration-300 font-semibold disabled:opacity-50"
+                                    className="px-8 py-2 bg-transparent border border-white text-white rounded-full hover:bg-white hover:text-red-600 transition-all duration-300 font-semibold disabled:opacity-50 cursor-pointer"
                                 >
                                     {isLoadingMore ? 'Loading...' : 'Watch more'}
                                 </button>
                             </div>
                         )}
 
-                        {tvShows.length === 0 && (
+                        {movies.length === 0 && (
                             <div className="text-center text-gray-400 py-20">
-                                No TV shows found.
+                                No movies found.
                             </div>
                         )}
                     </>
