@@ -136,7 +136,7 @@ export default function MovieDetailsPage() {
                         </div>
 
                         {/* Buttons */}
-                        <div className="flex flex-wrap gap-4 pt-4">
+                        {/* <div className="flex flex-wrap gap-4 pt-4">
                             {trailer && (
                                 <button
                                     onClick={() => setIsTrailerOpen(true)}
@@ -148,7 +148,7 @@ export default function MovieDetailsPage() {
                                     Watch Trailer
                                 </button>
                             )}
-                        </div>
+                        </div> */}
 
 
                         {/* Casts Section */}

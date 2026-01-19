@@ -24,8 +24,13 @@ export default function TVSeriesPage() {
             if (pageNumber === 1) setIsLoading(true);
             else setIsLoadingMore(true);
 
-            // Use getPopularTV as default list
-            const response = await tmdbApi.getPopularTV(pageNumber);
+            // Determine if we should search or fetch popular
+            let response;
+            if (isSearching && keyword.trim()) {
+                response = await tmdbApi.searchTV(keyword, pageNumber);
+            } else {
+                response = await tmdbApi.getPopularTV(pageNumber);
+            }
 
             if (pageNumber === 1) {
                 setTvShows(response.results);
@@ -52,12 +57,12 @@ export default function TVSeriesPage() {
     const handleSearch = async () => {
         if (keyword.trim()) {
             setIsSearching(true);
+            setPage(1);
             setIsLoading(true);
             try {
-                const response = await tmdbApi.searchTV(keyword);
+                const response = await tmdbApi.searchTV(keyword, 1);
                 setTvShows(response.results);
                 setTotalPages(response.total_pages);
-                setPage(1);
             } catch (error) {
                 console.error("Search failed", error);
             } finally {
@@ -103,6 +108,14 @@ export default function TVSeriesPage() {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+                {isSearching && keyword.trim() && !isLoading && (
+                    <div className="mb-8">
+                        <h2 className="text-2xl font-semibold text-white">
+                            Search Results for: <span className="text-red-500">"{keyword}"</span>
+                        </h2>
+                    </div>
+                )}
+
                 {isLoading ? (
                     <MovieGridSkeleton count={10} />
                 ) : (
@@ -115,7 +128,7 @@ export default function TVSeriesPage() {
                             ))}
                         </div>
 
-                        {!isSearching && page < totalPages && (
+                        {page < totalPages && (
                             <div className="flex justify-center mt-12">
                                 <button
                                     onClick={handleLoadMore}

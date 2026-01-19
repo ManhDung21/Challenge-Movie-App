@@ -24,7 +24,14 @@ export default function MoviesPage() {
             if (pageNumber === 1) setIsLoading(true);
             else setIsLoadingMore(true);
 
-            const response = await tmdbApi.getPopularMovies(pageNumber);
+            // Determine if we should search or fetch popular
+            // Note: For "Load More", we rely on the current state of isSearching and keyword
+            let response;
+            if (isSearching && keyword.trim()) {
+                response = await tmdbApi.searchMovies(keyword, pageNumber);
+            } else {
+                response = await tmdbApi.getPopularMovies(pageNumber);
+            }
 
             if (pageNumber === 1) {
                 setMovies(response.results);
@@ -51,15 +58,16 @@ export default function MoviesPage() {
     const handleSearch = async () => {
         if (keyword.trim()) {
             setIsSearching(true);
+            setPage(1);
             setIsLoading(true);
             try {
                 // Determine if we are searching or just filtering.
                 // For API search, we usually just replace the list.
                 // Assuming simple search for now (no load more for search in this basic version unless requested)
-                const response = await tmdbApi.searchMovies(keyword);
+                const response = await tmdbApi.searchMovies(keyword, 1);
                 setMovies(response.results);
                 setTotalPages(response.total_pages); // Update total pages for search results if pagination needed later
-                setPage(1); // Reset page
+
             } catch (error) {
                 console.error("Search failed", error);
             } finally {
@@ -106,6 +114,14 @@ export default function MoviesPage() {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+                {isSearching && keyword.trim() && !isLoading && (
+                    <div className="mb-8">
+                        <h2 className="text-2xl font-semibold text-white">
+                            Search Results for: <span className="text-red-500">"{keyword}"</span>
+                        </h2>
+                    </div>
+                )}
+
                 {isLoading ? (
                     <MovieGridSkeleton count={10} />
                 ) : (
@@ -118,7 +134,7 @@ export default function MoviesPage() {
                             ))}
                         </div>
 
-                        {!isSearching && page < totalPages && (
+                        {page < totalPages && (
                             <div className="flex justify-center mt-12">
                                 <button
                                     onClick={handleLoadMore}
