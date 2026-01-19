@@ -3,7 +3,7 @@ import { tmdbApi } from '../../services/Api';
 import type { Movie } from '../Component/movie.types';
 import MovieRow from '../Component/Card/MovieRow';
 import { MovieGridSkeleton } from '../Component/Skeleton';
-import HeroCarousel from '../Component/HeroCarousel';
+import HeroCarousel from '../Component/Card/HeroCarousel';
 
 export default function HomePage() {
     const [trending, setTrending] = useState<Movie[]>([]);

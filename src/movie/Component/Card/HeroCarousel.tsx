@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import useEmblaCarousel from 'embla-carousel-react';
 import Fade from 'embla-carousel-fade';
-import type { Movie } from './movie.types';
-import { getImageUrl } from '../../services/Api';
+import type { Movie } from '../movie.types';
+import { getImageUrl } from '../../../services/Api';
 
 interface HeroCarouselProps {
     movies: Movie[];
@@ -64,12 +65,12 @@ export default function HeroCarousel({ movies }: HeroCarouselProps) {
                                             {movie.overview}
                                         </p>
                                         <div className={`flex items-center justify-center md:justify-start space-x-2 md:space-x-4 pt-4 pointer-events-auto ${index === selectedIndex ? 'animate-fade-in-up delay-400' : 'opacity-0'}`}>
-                                            <button className="px-6 py-2 md:px-8 md:py-3 bg-[#ff0000] text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform text-lg md:text-2xl cursor-pointer">
+                                            <Link to={`/movie/${movie.id}`} className="px-6 py-2 md:px-8 md:py-3 bg-[#ff0000] text-white rounded-full font-bold shadow-[0_0_5px_5px_rgba(239,68,68,0.5)] hover:shadow-[0_0_5px_10px_rgba(239,68,68,0.6)] transition-transform text-lg md:text-2xl shadow-red-600 hover:shadow-red-600  cursor-pointer flex items-center justify-center">
                                                 Watch now
-                                            </button>
-                                            <button className="px-6 py-2 md:px-8 md:py-3 bg-transparent border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-red-600 transition-colors text-lg md:text-2xl cursor-pointer">
+                                            </Link>
+                                            <Link to={`/movie/${movie.id}`} className="px-6 py-2 md:px-8 md:py-3 bg-transparent border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-red-600 transition-colors text-lg md:text-2xl cursor-pointer">
                                                 Watch trailer
-                                            </button>
+                                            </Link>
                                         </div>
                                     </div>
 

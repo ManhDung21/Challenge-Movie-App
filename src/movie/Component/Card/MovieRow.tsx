@@ -17,7 +17,7 @@ interface MovieRowProps {
 export default function MovieRow({ title, movies, viewMoreLink }: MovieRowProps) {
     return (
         <div className="mb-8">
-            <div className="flex justify-between items-center mb-6 px-4 sm:px-6 lg:px-8 ml-4 sm:ml-6 lg:ml-8 border-l-4 border-red-600">
+            <div className="flex justify-between items-center mb-6 px-4 md:px-8 border-l-4 border-red-600">
                 <h2 className="text-2xl md:text-3xl font-bold text-white pl-4">
                     {title}
                 </h2>
@@ -30,7 +30,13 @@ export default function MovieRow({ title, movies, viewMoreLink }: MovieRowProps)
                     </Link>
                 )}
             </div>
-            <div className="relative group">
+            <div
+                className="relative group"
+                style={{
+                    maskImage: 'linear-gradient(to right, transparent 0, black 32px, black calc(100% - 32px), transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0, black 32px, black calc(100% - 32px), transparent 100%)'
+                }}
+            >
                 <div className="px-4 md:px-8">
                     <Swiper
                         modules={[FreeMode, Autoplay]}
@@ -42,7 +48,7 @@ export default function MovieRow({ title, movies, viewMoreLink }: MovieRowProps)
                         }}
                         spaceBetween={16}
                         slidesPerView="auto"
-                        className="!overflow-visible"
+                        className=""
                     >
                         {movies.map((movie, index) => (
                             <SwiperSlide key={`${movie.id}-${index}`} className="!w-auto">
@@ -53,10 +59,6 @@ export default function MovieRow({ title, movies, viewMoreLink }: MovieRowProps)
                         ))}
                     </Swiper>
                 </div>
-
-                {/* Gradient Masks */}
-                <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
-                <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
             </div>
         </div>
     );

@@ -101,7 +101,7 @@ export default function MovieDetailsPage() {
                             <img
                                 src={getImageUrl(movie.poster_path, 'w500')}
                                 alt={movie.title}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                className="w-full h-full object-cover transition-transform duration-500 "
                             />
                         </div>
                     </div>
@@ -140,7 +140,7 @@ export default function MovieDetailsPage() {
                             {trailer && (
                                 <button
                                     onClick={() => setIsTrailerOpen(true)}
-                                    className="px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-transform active:scale-95 shadow-lg flex items-center gap-2"
+                                    className="px-8 py-3 bg-red-600 text-white font-bold rounded-full shadow-[0_0_5px_10px_rgba(239,68,68,0.5)] hover:shadow-[0_0_10px_10px_rgba(239,68,68,0.6)] transition-transform active:scale-95 shadow-lg flex items-center gap-2"
                                 >
                                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M8 5v14l11-7z" />
@@ -200,8 +200,7 @@ export default function MovieDetailsPage() {
                 {/* Similar Movies Section (Below Fold) */}
                 {similarMovies.length > 0 && (
                     <div className="mt-24 space-y-6">
-                        <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-red-600 pl-4">More Like This</h2>
-                        <MovieRow title="" movies={similarMovies} />
+                        <MovieRow title="More Like This" movies={similarMovies} />
                     </div>
                 )}
             </div>
