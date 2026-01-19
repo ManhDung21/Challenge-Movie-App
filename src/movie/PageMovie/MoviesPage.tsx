@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { tmdbApi } from '../../services/Api';
 import type { Movie } from '../Component/movie.types';
-import MovieCard from '../Component/CardandRow/MovieCard';
+import MovieCard from '../Component/Card/MovieCard';
 import { MovieGridSkeleton } from '../Component/Skeleton';
 
 export default function MoviesPage() {

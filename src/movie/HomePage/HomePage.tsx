@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { tmdbApi } from '../../services/Api';
 import type { Movie } from '../Component/movie.types';
-import MovieRow from '../Component/CardandRow/MovieRow';
+import MovieRow from '../Component/Card/MovieRow';
 import { MovieGridSkeleton } from '../Component/Skeleton';
 import HeroCarousel from '../Component/HeroCarousel';
 
@@ -44,13 +44,13 @@ export default function HomePage() {
     };
 
     return (
-        <div className="min-h-screen text-white pb-20 md:pb-0">
+        <div className="text-white">
             {/* Draggable Banner Section */}
             {!isLoading && trending.length > 0 && (
                 <HeroCarousel movies={trending} />
             )}
 
-            <div className="relative z-10 pb-12">
+            <div className="relative z-10 pb-6 md:pb-12">
                 {error && (
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
                         <div className="bg-red-900/50 border-l-4 border-red-500 p-4">

@@ -32,7 +32,7 @@ export default function Navigation() {
             <nav
                 className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/70 backdrop-blur-md border-b border-[#2b2b2b]' : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent border-transparent'}`}
             >
-                <div className="hidden md:block w-full px-[30px]">
+                <div className="w-full px-4 md:px-[30px]">
                     <div className="flex items-center justify-between h-20 md:h-25">
                         {/* Logo - Visible on all screens */}
                         <Link to="/" className="flex items-center space-x-3">
@@ -70,16 +70,19 @@ export default function Navigation() {
             </nav>
 
             {/* Mobile Bottom Navigation Bar */}
-            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/95 border-t px-10 py-2 flex justify-between z-[100]">
-                <Link to="/" className={`flex flex-col items-center justify-center ${isActive('/') ? 'text-red-600' : 'text-gray-400'}`}>
-                    <span className="text-[24px] font-bold">Home</span>
-                </Link>
-                <Link to="/movie" className={`flex flex-col items-center justify-center ${isActive('/movie') ? 'text-red-600' : 'text-gray-400'}`}>
-                    <span className="text-[24px] font-bold">Movies</span>
-                </Link>
-                <Link to="/tv" className={`flex flex-col items-center justify-center ${isActive('/tv') ? 'text-red-600' : 'text-gray-400'}`}>
-                    <span className="text-[24px] font-bold">TV</span>
-                </Link>
+
+            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/95 border-t border-[#2b2b2b] pb-5 pt-3 z-[100]">
+                <div className="grid grid-cols-3 h-full">
+                    <Link to="/" className={`flex flex-col items-center justify-center ${isActive('/') ? 'text-red-600' : 'text-gray-400'}`}>
+                        <span className="text-xl font-bold">Home</span>
+                    </Link>
+                    <Link to="/movie" className={`flex flex-col items-center justify-center ${isActive('/movie') ? 'text-red-600' : 'text-gray-400'}`}>
+                        <span className="text-xl font-bold">Movies</span>
+                    </Link>
+                    <Link to="/tv" className={`flex flex-col items-center justify-center ${isActive('/tv') ? 'text-red-600' : 'text-gray-400'}`}>
+                        <span className="text-xl font-bold">TV</span>
+                    </Link>
+                </div>
             </div>
         </>
     );

@@ -9,7 +9,7 @@ import Footer from './FooterVSNavigation/Footer';
 export default function MovieApp() {
     return (
         <BrowserRouter>
-            <div className="min-h-screen bg-black flex flex-col pb-20 md:pb-0">
+            <div className="min-h-screen bg-black flex flex-col">
                 <Navigation />
 
                 <Routes>

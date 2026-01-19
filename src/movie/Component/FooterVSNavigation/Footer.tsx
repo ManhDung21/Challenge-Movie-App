@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
     return (
-        <footer className="relative bg-black text-gray-400 py-12 border-t border-[#2b2b2b] mt-auto">
+        <footer className="relative bg-black text-gray-400 py-12 pb-16 md:pb-12 border-t border-[#2b2b2b] mt-auto">
             {/* Background Image */}
             <div
                 className="absolute inset-0 z-0"
