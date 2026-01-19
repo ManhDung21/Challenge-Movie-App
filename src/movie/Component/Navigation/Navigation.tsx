@@ -71,7 +71,7 @@ export default function Navigation() {
 
             {/* Mobile Bottom Navigation Bar */}
 
-            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/95 border-t border-[#2b2b2b] pb-5 pt-3 z-[100]">
+            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/95 border-t border-[#2b2b2b] pt-3 z-[100] pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))]">
                 <div className="grid grid-cols-3 h-full">
                     <Link to="/" className={`flex flex-col items-center justify-center ${isActive('/') ? 'text-red-600' : 'text-gray-400'}`}>
                         <span className="text-xl font-bold">Home</span>
